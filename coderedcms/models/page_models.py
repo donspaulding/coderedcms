@@ -12,7 +12,8 @@ from typing import Dict, List, Optional, TYPE_CHECKING, Union, Tuple
 # This is a requirement for icalendar, even if django doesn't require it
 import pytz
 
-import geocoder
+from geopy.geocoders import GoogleV3
+from geopy.exc import GeopyError
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -2106,24 +2107,22 @@ class CoderedLocationPage(CoderedWebPage):
         }
 
     def save(self, *args, **kwargs):
-        if (
-            self.auto_update_latlng
-            and LayoutSettings.for_site(
+        if self.auto_update_latlng:
+            api_key = LayoutSettings.for_site(
                 Site.objects.get(is_default_site=True)
             ).google_maps_api_key
-        ):
-            try:
-                g = geocoder.google(
-                    self.address,
-                    key=LayoutSettings.for_site(
-                        Site.objects.get(is_default_site=True)
-                    ).google_maps_api_key,
-                )
-                self.latitude = g.latlng[0]
-                self.longitude = g.latlng[1]
-            except TypeError:
-                # Raised if google denied the request
-                pass
+            if api_key:
+                geocoder = GoogleV3(api_key=api_key)
+                try:
+                    location = geocoder.geocode(
+                        query=self.address,
+                        exactly_one=True,
+                    )
+                    self.latitude = location.latitude
+                    self.longitude = location.longitude
+                except GeopyError:
+                    # If we encounter any geocoding errors, catch them here.
+                    pass
 
         return super(CoderedLocationPage, self).save(*args, **kwargs)
 
