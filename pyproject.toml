@@ -1,3 +1,54 @@
+[tool.poetry]
+name = "coderedcms"
+version = "3.0.0-dev"
+description = "Wagtail-based CMS by CodeRed for building marketing websites."
+authors = ["CodeRed LLC <info@coderedcorp.com>"]
+license = "BSD License"
+readme = "README.md"
+repository = "https://github.com/coderedcorp/coderedcms"
+classifiers = [
+  "Environment :: Web Environment",
+  "Framework :: Django",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3 :: Only",
+  "Framework :: Django",
+  "Framework :: Django :: 4.1",
+  "Framework :: Django :: 4.2",
+  "Framework :: Wagtail",
+  "Framework :: Wagtail :: 5",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+  "Topic :: Internet :: WWW/HTTP :: Site Management",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+wagtail = ">=5,<6"
+wagtail-cache = ">=2.3,<3"
+wagtail-seo = ">=2.4,<3"
+icalendar = "==5.0.*"
+django = ">=4.1,<5.1"
+beautifulsoup4 = ">=4.8,<4.12"
+django-bootstrap5 = "^23.4"
+geopy = "^2.4.1"
+django-eventtools = "==1.0.*"
+
+[tool.poetry.scripts]
+coderedcms="coderedcms.bin.coderedcms:main"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.black]
 line-length = 80
 target-version = ['py37', 'py38', 'py39', 'py310']
