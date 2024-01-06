@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "coderedcms"
-version = "3.0.0-dev"
+version = "3.3.0-dev"
 description = "Wagtail-based CMS by CodeRed for building marketing websites."
 authors = ["CodeRed LLC <info@coderedcorp.com>"]
 license = "BSD License"
